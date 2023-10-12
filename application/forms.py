@@ -11,13 +11,24 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("Sign Up")
 
 class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(min = 4, max = 8)])
+    username = StringField("Username", validators=[DataRequired(), Length()])
     password = PasswordField("Password", validators=[DataRequired(), Length(min = 1)])
     submit = SubmitField("Login")
 
 class EditProfile(FlaskForm):
-    pass
+    username =  StringField("Username", validators=[DataRequired(), Length()])
+    bio = TextAreaField("Bio :")
+    profile_picture = StringField("Profile picture : ")
+    password = password = PasswordField("Password", validators=[DataRequired(), Length(min = 1)])
+    Submit = SubmitField("Submit Edit")
 
 class CreatePostForm(FlaskForm):
-    pass
+    post = StringField("Post : ")
+    caption = StringField("Caption : ")
+    Submit = SubmitField("Post")
+
+class EditPost(FlaskForm):
+    post = StringField("Post : ")
+    caption = StringField("Caption : ")
+    Submit = SubmitField("Submit Edit")
 
