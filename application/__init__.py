@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from dotenv import load_dotenv
 import os
 from datetime import timedelta
+from flask_migrate import Migrate
 
 load_dotenv()
 
@@ -20,9 +21,11 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30)
 # Session(app)
 db = SQLAlchemy(app) 
 
+migrate = Migrate(app,db)
+
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
-from application import routes
+from application.routes import *
 from application.models import *
