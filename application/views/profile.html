@@ -10,10 +10,10 @@
             <p>{{ current_user.bio }}</p>
             <p>Following: {{ current_user.following_users|length }}</p>
             <p>Follower: {{ current_user.follower_users|length }}</p>
+            <form action="{{url_for('editprofile')}}">
+                <button class="Button" style="align-items:center;;">Edit Profile</button>
+            </form>
         </div>
-        <form action="{{url_for('editprofile')}}">
-            <button class="Button" style="align-items:center; margin-top: 150%;;">Edit Profile</button>
-        </form>
     </div>
 
     <div class="image-container">
