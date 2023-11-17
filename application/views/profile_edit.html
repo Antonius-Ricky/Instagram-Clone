@@ -63,6 +63,7 @@
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
                 </div>
+                
 
         </fieldset>
         <div class="">
@@ -71,5 +72,7 @@
         
 
     </form>
+    <a href="{{url_for('reset_password', username=current_user.username) }}" >Ingin mengubah password?</a>
+
 </div>
 {% endblock content %}

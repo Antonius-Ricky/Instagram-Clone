@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, make_response,jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 
 from application import app
@@ -55,7 +55,7 @@ def index():
             caption =form.caption.data
         )
         
-        post.photo = save_image(form.post_pic.data)
+        post.photo = save_image(form.post_pic.data, 'posts')
         db.session.add(post)
         db.session.commit()
         flash('Your image has been posted ❤!', "success")
@@ -95,10 +95,12 @@ def forgotpassword():
     return render_template('forgot_password.html', title='ForgotPassword', form=form)
 
 @app.route('/editprofile',methods=['GET', 'POST'])
+@login_required
 def editprofile():
     form = EditProfileForm()
 
     if form.validate_on_submit():
+        print(1)
         user = User.query.get(current_user.id)
         if form.username.data != user.username:
             user.username = form.username.data
@@ -106,27 +108,52 @@ def editprofile():
         user.bio = form.bio.data
 
         if form.profile_pic.data:
-            pass
+            user.profile_pic = save_image(form.profile_pic.data, 'profile_pics')
 
         db.session.commit()
         flash('Profile updated', 'success')
         return redirect(url_for('profile', username=current_user.username))
-    
+    print(2)
     form.username.data = current_user.username
     form.fullname.data = current_user.fullname
     form.bio.data = current_user.bio
     
     return render_template('profile_edit.html', title=f'Edit {current_user.username} Profile', form=form)
 
-@app.route('/resetpassword')
-def resetpassword():
+@app.route('/reset_password', methods=['GET', 'POST'])
+@login_required
+def reset_password():
     form = ResetPasswordForm()
-    return render_template('reset_password.html', title='Reset Password', form=form)
 
-@app.route('/verif')
+    if form.validate_on_submit():
+        user = User.query.filter_by(password=form.old_password.data).first()
+
+        if user:
+            user.password = form.new_password.data
+            db.session.commit()
+            flash('password reset successfully!', 'success')
+            return redirect(url_for('verif'))
+        else:
+            flash('old password is incorrect!', 'danger')
+    return render_template('reset_password.html', title=f'Change {current_user.fullname} Password', form=form)
+
+@app.route('/verif',  methods=['GET', 'POST'])
+@login_required
 def verif():
     form = VerificationResetPasswordForm()
-    return render_template('verif.html', title= 'Verification', form=form)
+
+    if form.validate_on_submit():
+        password = form.password.data
+
+        user = User.query.get(current_user.id)
+        if  password == user.password:
+            login_user(user)
+            flash('Password verified successfully!', 'success')
+            return redirect(url_for('profile', username=current_user.username))
+        else:
+            flash('Invalid password. Please try again.', 'error')
+
+    return render_template('verif.html', title='Verification', form=form)
 
 @app.route('/createpost')
 def createpost():
@@ -137,6 +164,23 @@ def createpost():
 def editpost():
     form = EditPostForm()
     return render_template('edit_post.html', title='Edit post', form=form)
+
+@app.route('/like', methods=['GET','POST'])
+@login_required
+def like(post_id):
+    data = request.json
+    post_id = int(data['postId'])
+    like = Like.query.filter_by(user_id = current_user, post_id=post_id).first()
+    if not like:
+        like = Like(user_id=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+        return make_response(200, jsonify({"status" : True}), 200)
+    
+    db.session.delete(like)
+    db.session.commit()
+    return make_response(200, jsonify({"status" : False}), 200)
+    
 
 
 

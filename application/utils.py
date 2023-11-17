@@ -36,10 +36,13 @@ def load_user(user_id):
 
 #IMAGE SAVE UTILS
 
-def save_image(form_picture_data):
+def save_image(form_picture_data, folder_name):
     random_hex = secrets.token_hex(5)
-    f_name, f_ext = os.path.splitext(form_picture_data.filename)
-    picture_fn = 'images/posts/'+random_hex+f_ext
+    while any(file.startwith(random_hex) for file in f'images/{folder_name}/'):
+        random_hex = secrets.token_hex(5)
+    _, f_ext = os.path.splitext(form_picture_data.filename)
+    file_name = random_hex + f_ext
+    picture_fn = f'images/{folder_name}/'+file_name
     picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
 
     image = Image.open(form_picture_data)
@@ -50,4 +53,4 @@ def save_image(form_picture_data):
 
     image.save(picture_path)
 
-    return picture_fn
+    return file_name
