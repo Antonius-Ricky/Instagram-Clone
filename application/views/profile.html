@@ -1,17 +1,20 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
     <div class="profile-card">
         <div class="profile-photo">
-            <img src="{{ url_for('static', filename='images/profile_pics/' + current_user.profile_pic ) }}" alt="Profile Photo">
+            <div>
+                <img src="{{ url_for('static', filename='uploads/profilepics/' + filename) }}" alt="Profile Picture">
+            </div>
         </div>
+        
         <div class="profile-info">
             <h2>{{current_user.fullname}}</h2>
             <p>{{ current_user.bio }}</p>
             <p>Post : {{current_user.posts|length}}</p>
             <p>Following: {{ current_user.following_users|length }}</p>
             <p>Follower: {{ current_user.follower_users|length }}</p>
-            
             <form action="{{url_for('editprofile')}}">
                 <button class="Button" style="align-items:center;;">Edit Profile</button>
             </form>
@@ -20,7 +23,7 @@
 
     <div class="image-container">
         {% for post in posts %}
-        <div class="image-item"><img src="{{ url_for('static', filename='images/posts/' + post.photo) }}" alt="Post Image"></div>
+        <div class="image-item"><img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image"></div>
         {% endfor %}
     </div>
 {% endblock content %}

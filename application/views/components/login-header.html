@@ -1,14 +1,47 @@
+<style>
+    header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    li {
+        margin-right: 10px;
+    }
+
+    li::after {
+        content: '|';
+        margin-left: 10px;
+        color: #666; /* Change color as needed */
+    }
+
+    li:last-child::after {
+        content: ''; /* Remove the separator for the last item */
+    }
+
+    img {
+        margin-right: 10px; /* Adjust the margin between the logo and the first link */
+    }
+</style>
+
 <header>
-    <img src="#" alt="logo"  >
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" style="width: 25px; height: auto;">
     <ul>
         <li>
-            <a href="{{url_for('index')}}"  >Home</a>
+            <a onclick="window.location.href='{{ url_for('index') }}'">Home</a>
         </li>
         <li>
-            <a href="{{url_for('profile', username=current_user.username) }}" >Profile</a>
+            <a onclick="window.location.href='{{ url_for('profile', username=current_user.username) }}'">Profile</a>
         </li>
         <li>
-            <a href="{{url_for('logout')}}"  >Log out</a>
+            <a onclick="window.location.href='{{ url_for('logout') }}'">Log out</a>
         </li>
     </ul>
 </header>

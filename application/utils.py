@@ -36,21 +36,29 @@ def load_user(user_id):
 
 #IMAGE SAVE UTILS
 
-def save_image(form_picture_data, folder_name):
+def save_image(form_picture_data):
     random_hex = secrets.token_hex(5)
-    while any(file.startwith(random_hex) for file in f'images/{folder_name}/'):
-        random_hex = secrets.token_hex(5)
-    _, f_ext = os.path.splitext(form_picture_data.filename)
-    file_name = random_hex + f_ext
-    picture_fn = f'images/{folder_name}/'+file_name
+    _, f_ext = os.path.splitext(form_picture_data.filename) #f_ext = file extension,underscore dipake ketika variabel yang ingin dipake bingung
+    picture_fn = 'images/posts/'+random_hex+f_ext
     picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
 
     image = Image.open(form_picture_data)
     # i_width, i_height = image.size
     # ratio = i_width/1000
-    # output_size = (i_width/ratio, i_height/ratio)
-    # image.thumbnail(image)
-
+    # output_size = (i_widith/ratio, i_height/ratio)
+    # image.thumbnail(image)z
     image.save(picture_path)
 
-    return file_name
+    return picture_fn
+
+def save_profile_picture(form_picture_data):
+    random_hex = secrets.token_hex(5)
+    _, f_ext = os.path.splitext(form_picture_data.filename)
+    picture_fn = 'uploads/profilepics/'+random_hex+f_ext
+    picture_path = os.path.join(current_app.root_path, 'static/', picture_fn)
+
+    image = Image.open(form_picture_data)
+
+    image.save(picture_path)
+    
+    return picture_fn

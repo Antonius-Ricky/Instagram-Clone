@@ -28,16 +28,19 @@
     <div class="post-container">
         {% for post in posts %}
             <div class="post">
-                <div class="post-header" onclick="window.location.href='{{url_for('profile', username=post.posts_owner.username)}}';">
-                    <img src="{{url_for('static', filename='images/profile_pics/' + post.posts_owner.profile_pic )}}" alt="Post owner" style="height:30px;width:30px;">
-                    <h2 > {{ post.posts_owner.username }}</h2>
+                <div class="post-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div  style="display: flex; align-items: center;" onclick="window.location.href='{{url_for('profile', username=post.posts_owner.username)}}';">
+                        <img src="{{ url_for('static', filename='uploads/profilepics/' + post.posts_owner.profile_pic) }}" alt="Post owner" style="height:30px;width:30px;">
+                        <h2 > {{ post.posts_owner.username }}</h2>
+                    </div>
+                    <span id="EditPostbtn" style="margin-left: auto;"  onclick="window.location.href='{{ url_for('edit_post', post_id=post.id) }}';">🗿</span>
                 </div>
-                <img src="{{ url_for('static', filename='images/posts' + post.photo) }}" alt="Post Image">
+                <img src="{{ url_for('static', filename='' + post.photo) }}" alt="Post Image">
                 <p>{{ post.caption }}</p>
 
                 <div class="post-footer">
-                    <span id="likeBtn" data-post-id="{{post.id}}">❤</span><span id="likeCounter">{{post.likes | length}}</span>
-                    <span id="commentBtn" data-post-id="{{post.id}}">💬</span><span id="commentCounter">{{ post.comments | length}}</span>
+                    <span id="likeBtn">❤{{post.likes | length}}</span>
+                    <span id="commentBtn">💬{{ post.comments | length}}</span>
                 </div>
             </div>
         {% endfor %}

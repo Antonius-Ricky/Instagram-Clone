@@ -19,7 +19,7 @@ class SignUpForm(FlaskForm):
     confirm_password    = PasswordField("confirm password", validators=[DataRequired(), EqualTo("password")])
     submit              = SubmitField("sign up")
 
-class EditProfileForm(SignUpForm):
+class EditProfileForm(FlaskForm):
     username            = StringField("username", validators=[DataRequired(), Length(min=4, max=12)])
     fullname            = StringField("full name", validators=[DataRequired(), Length(min=4, max=16)])
     bio                 = StringField("bio")
