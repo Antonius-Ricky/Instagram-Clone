@@ -50,32 +50,45 @@
                 <p>{{ post.caption }}</p>
 
                 <div class="post-footer">
-                    <span id="likeBtn" data-post-id="{{ post.id }}">❤️</span><span id="likeCounter">{{post.likes | length}}</span>
-                    <span id="commentBtn" data-post-id="{{ post.id }}">💬</span><span id="commentCounter">{{ post.comments | length }}</span>
+                    <span id="likeBtn{{ post.id }}" data-post-id="{{ post.id }}">❤️</span><span id="likeCounter{{ post.id }}">{{ post.likes | length }}</span>
+                    <span id="commentBtn{{ post.id }}" data-post-id="{{ post.id }}">💬</span><span id="commentCounter{{ post.id }}">{{ post.comments | length }}</span>
                 </div>
             </div>
         {% endfor %}
     </div>
     <script>
-        document.querySelectorAll("#likeBtn").forEach(btn => {
+        document.querySelectorAll("[id^=likeBtn]").forEach(btn => {
             btn.addEventListener('click', function () {
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://127.0.0.1:5000/like', true);
-                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                const postId = this.dataset.postId;
     
-                xhr.onload = function () {
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        console.log(response.status);
-                        // Reload the page after successfully processing the like action
-                        location.reload();
+           
+                fetch('http://127.0.0.1:5000/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 'postId': postId }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.status);
+    
+                  
+                    const likeCounter = document.querySelector(`#likeCounter${postId}`);
+                    if (likeCounter) {
+                        likeCounter.textContent = data.likeCount; 
                     }
-                };
     
-                const data = JSON.stringify({ 'postId': this.dataset.postId });
-                console.log(data); 
-                xhr.send(data);
-            })
+            
+                    const likeBtn = document.querySelector(`#likeBtn${postId}`);
+                    if (likeBtn) {
+                        likeBtn.textContent = data.liked ? '❤️' : '🤍'; 
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
         });
     </script>
     <div class="pagination-box">

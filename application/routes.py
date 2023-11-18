@@ -98,9 +98,13 @@ def signup():
 def about():
     return render_template('about.html', title='About')
 
-@app.route('/forgotpassword')
+@app.route('/forgotpassword',methods=('GET', 'POST'))
 def forgotpassword():
     form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        flash('Forgot Password link sent to your email', 'success')
+
+        return redirect(url_for('login'))
     return render_template('forgot_password.html', title='ForgotPassword', form=form)
 
 @app.route('/editprofile', methods=['GET', 'POST'])
@@ -188,12 +192,16 @@ def like():
         like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
-        return make_response(jsonify({"status": True}), 200)
+
+    
+        like_count = Like.query.filter_by(post_id=post_id).count()
+
+        return make_response(jsonify({"status": True, "liked": True, "likeCount": like_count}), 200)
     
     db.session.delete(like)
     db.session.commit()
-    return make_response(jsonify({"status": False}), 200)
-
+    like_count = Like.query.filter_by(post_id=post_id).count()
+    return make_response(jsonify({"status": True, "liked": False, "likeCount": like_count}), 200)
 
 
 
