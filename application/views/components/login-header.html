@@ -1,8 +1,11 @@
+
 <style>
     header {
         display: flex;
         align-items: center;
         padding: 10px;
+        cursor: pointer;
+        
     }
 
     ul {
@@ -18,30 +21,48 @@
 
     li::after {
         content: '|';
-        margin-left: 10px;
-        color: #666; /* Change color as needed */
+        margin-left: 20px;
+        color: #666; 
     }
 
     li:last-child::after {
-        content: ''; /* Remove the separator for the last item */
+        content: ''; 
     }
 
     img {
-        margin-right: 10px; /* Adjust the margin between the logo and the first link */
+        margin-right: 10px;
     }
 </style>
 
+<script>
+    function redirectToHome() {
+        window.location.href = "{{ url_for('index') }}";
+    }
+
+    function redirectToProfile() {
+        window.location.href = "{{ url_for('profile', username=current_user.username) }}";
+    }
+
+    function redirectToLogOut() {
+        window.location.href = "{{ url_for('logout') }}";
+    }
+</script>
+
 <header>
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" style="width: 25px; height: auto;">
-    <ul>
-        <li>
-            <a onclick="window.location.href='{{ url_for('index') }}'">Home</a>
-        </li>
-        <li>
-            <a onclick="window.location.href='{{ url_for('profile', username=current_user.username) }}'">Profile</a>
-        </li>
-        <li>
-            <a onclick="window.location.href='{{ url_for('logout') }}'">Log out</a>
-        </li>
-    </ul>
+    <img src="{{url_for('static', filename='logo.png')}}" alt="logo" style="width: 25px; height: auto; margin-right: 10px;">
+    <div style="font-size: 20px; font-weight: bold;">
+        <ul style="list-style: none; padding: 0;">
+            <li style="display: inline-block; margin-right: 35px;">
+                <a onclick="redirectToHome()">Home</a>
+            </li>
+            <li style="display: inline-block; margin-right: 35px;">
+                <a onclick="redirectToProfile()">Profile</a>
+            </li>
+            <li style="display: inline-block;">
+                <a onclick="redirectToLogOut()">Log Out</a>
+            </li>
+        </ul>
+    </div>
 </header>
+
+

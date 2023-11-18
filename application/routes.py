@@ -107,7 +107,7 @@ def forgotpassword():
 @login_required
 def editprofile():
     form = EditProfileForm()
-    filename = None  # Set a default value
+    filename = None  
 
     if form.validate_on_submit():
         user = User.query.get(current_user.id)
@@ -143,28 +143,13 @@ def reset_password():
             user.password = form.new_password.data
             db.session.commit()
             flash('password reset successfully!', 'success')
-            return redirect(url_for('verif'))
-        else:
-            flash('old password is incorrect!', 'danger')
-    return render_template('reset_password.html', title=f'Change {current_user.fullname} Password', form=form)
 
-@app.route('/verif',  methods=['GET', 'POST'])
-@login_required
-def verif():
-    form = VerificationResetPasswordForm()
-
-    if form.validate_on_submit():
-        password = form.password.data
-
-        user = User.query.get(current_user.id)
-        if  password == user.password:
-            login_user(user)
-            flash('Password verified successfully!', 'success')
             return redirect(url_for('profile', username=current_user.username))
         else:
-            flash('Invalid password. Please try again.', 'error')
-
-    return render_template('verif.html', title='Verification', form=form)
+            flash('old password is incorrect!', 'danger')
+    if not current_user.is_authenticated:
+        return redirect(url_for('verif'))
+    return render_template('reset_password.html', title=f'Change {current_user.fullname} Password', form=form)
 
 @app.route('/createpost')
 def createpost():
@@ -180,29 +165,34 @@ def edit_post(post_id):
         post.caption = form.caption.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
-        return redirect(url_for('profile', username=current_user.username))
+        return redirect(url_for('index'))
 
     elif request.method == 'GET':
         form.caption.data = post.caption
 
     return render_template('edit_post.html', title='Edit Post', form=form, post=post)
 
-@app.route('/like', methods=['GET','POST'])
+@app.route('/like', methods=['POST'])
 @login_required
-def like(post_id):
+def like():
     data = request.json
-    post_id = int(data['postId'])
-    like = Like.query.filter_by(user_id = current_user, post_id=post_id).first()
+    try:
+        post_id = int(data.get('postId'))
+    except (ValueError, TypeError):
+        print(f"Invalid postId: {data.get('postId')}")
+        return make_response(jsonify({"status": False, "error": "Invalid postId"}), 400)
+    
+    like = Like.query.filter_by(user_id=current_user.id, post_id=post_id).first()
+    
     if not like:
         like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
-        return make_response(200, jsonify({"status" : True}), 200)
+        return make_response(jsonify({"status": True}), 200)
     
     db.session.delete(like)
     db.session.commit()
-    return make_response(200, jsonify({"status" : False}), 200)
-    
+    return make_response(jsonify({"status": False}), 200)
 
 
 

@@ -1,17 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="">
+<div class="container">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="">
-            <legend class="">Edit Post</legend>
+            <legend class="legend">Edit Post</legend>
 
-            <div class="">
-                {{ form.caption.label(class="") }}
+            <div class="form-group">
+                {{ form.caption.label(class="form-control-label") }}
 
                 {% if form.caption.errors%}
-                    {{ form.caption(class="") }}
+                    {{ form.caption(class="form-control") }}
                     <div class="">
                         {% for error in form.caption.errors %}
                             <span>{{ error }}</span>
@@ -22,10 +21,8 @@
                 {% endif %}
 
             </div>
-
-        </fieldset>
         <div class="">
-            {{ form.submit(class="btn btn-outline-info") }}
+            {{ form.submit(class="btn btn-primary") }}
         </div>
         
 

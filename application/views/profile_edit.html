@@ -1,17 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="">
+<div class="container">
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <fieldset class="">
-            <legend class="">Edit Profile</legend>
+            <legend class="legend">Edit Profile</legend>
 
-            <div class="">
-                {{ form.username.label(class="") }}
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
 
                 {% if form.username.errors%}
-                    {{ form.username(class="") }}
+                    {{ form.username(class="form-control") }}
                     <div class="">
                         {% for error in form.username.errors %}
                             <span>{{ error }}</span>
@@ -23,11 +22,11 @@
 
             </div>
 
-            <div class="">
-                {{ form.fullname.label(class="") }}
+            <div class="form-group">
+                {{ form.fullname.label(class="form-control-label") }}
 
                 {% if form.fullname.errors%}
-                    {{ form.fullname(class="") }}
+                    {{ form.fullname(class="form-control") }}
                     <div class="">
                         {% for error in form.fullname.errors %}
                             <span>{{ error }}</span>
@@ -39,11 +38,11 @@
 
             </div>
 
-            <div class="">
-                {{ form.bio.label(class="") }}
+            <div class="form-group">
+                {{ form.bio.label(class="form-control-label") }}
 
                 {% if form.bio.errors%}
-                    {{ form.bio(class="") }}
+                    {{ form.bio(class="form-control") }}
                     <div class="">
                         {% for error in form.bio.errors %}
                             <span>{{ error }}</span>
@@ -63,11 +62,8 @@
                     <span class="text-danger">{{ error }}</span>
                 {% endfor %}
                 </div>
-                
-
-        </fieldset>
         <div class="">
-            {{ form.submit(class="btn btn-outline-info") }}
+            {{ form.submit(class="btn btn-primary") }}
         </div>
         
 

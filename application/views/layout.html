@@ -8,7 +8,6 @@
             padding:0px;
             margin:0px;
             box-sizing: border-box;
-            
         }
         body{
             padding: 20px;
@@ -29,13 +28,13 @@
         header ul li{
             display: inline-block;
         }
-        div.new-post-box{
-            padding: 5px;
-        }
+
         div.post-container{
             border: 1px solid rgb(0, 0, 0);
             margin: 5px auto;
             text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
             padding: 5px;
 
         }
@@ -46,10 +45,14 @@
             max-width: 900px;
             justify-content: flex-start;
             align-items: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            
         }
 
         .image-item {
-            flex: 0 0 calc(33.33% - 20px); /* Adjust the width and margin as needed */
+            flex: 0 0 calc(33.33% - 20px);
             margin: 10px;
             box-sizing: border-box;
             overflow: hidden;
@@ -68,6 +71,8 @@
             display: flex;
             width: 100%;
             padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
             text-align: center;
             margin: 20px 0px;
         }
@@ -84,18 +89,42 @@
             max-width: 100%;
             height: auto;
         }
-
         .profile-info {
             margin-left: 20px;
             text-align: left;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .profile-info h2 {
             margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .profile-info p {
             margin: 5px 0;
+            font-size: 0.9rem;
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .profile-info p:first-child {
+            color: #000000;
+        }
+
+        .profile-info p:last-child {
+            font-weight: 600;
+            color: #000000;
+        }
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .profile-stat {
+            text-align: center;
+            margin-right: 10px;
         }
         .post-header{
             display: flex;
@@ -112,69 +141,104 @@
             border: 1px solid rgb(0, 0, 0);
             text-align: center;
             padding: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
             margin-bottom: 30px;
+            border-radius: 10px;
         }
         div.alert-box{
             color: rgb(0, 0, 0);
         }
-        .Frame {
-            width: 390px;
-            height: 700px; 
-            position: relative;
-            background: black;
+        
+    
+        div.new-post-box{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            margin: 20px auto;
+            max-width: 400px;
+            
         }
-        .Form {
-            width: 343px;
-            height: auto;
-            left: 10%;
-            top: 35%;
-            transform: translateY(-50%);
-            position: absolute;
-            background: #9e9b9b;
-            border-radius: 5px;
-            border: 0.50px rgba(255, 255, 255, 0.20) solid;
-            padding: 10px;
-        }
-        .Rectangle {
-            width: 100%;
-            height: 44px;
-            background: transparent;
-            border: none;
+        div.container{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 400px;
+            margin-top: 35px;
         }
 
-        .Rectangle input {
-            width: 100%;
-            height: 60%;
-            background: transparent;
-            border: none;
-            color: white;
+        .legend{
+            color: rgb(0, 0, 0);font-weight: bold;font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;font-size: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px; 
+        }
+
+        .form-control-label {
+            display: block;
+            margin-bottom: 5px;
             font-size: 14px;
-            font-family: Roboto;
-            font-weight: 400;
-            word-wrap: break-word;
-            padding: 0;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-control-file {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #3797EF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
         }
-
-        .Button {
-            width: 100%;
-            height: 44px;
+        .alert-box {
+            font-size: 15px;
+            background-color: rgb(183, 219, 111);
+            display: none; 
+            position: fixed;
+            top: 12%;
+            width: 350px;
             text-align: center;
-            padding: 0; 
+
+            height: 10px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 999; 
+            line-height: 0.3;
+        }
+        .alert-box .alert.error {
+            background-color: salmon;
         }
 
-        .btn-outline-info {
-            width: 100%;
-            height: 100%;
-            background: #3797EF;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 14px;
-            font-family: Roboto;
-            font-style: italic;
-            font-weight: 700;
-            word-wrap: break-word;
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
         }
     </style>
     {% if title %}
@@ -190,12 +254,13 @@
         {% else %}
             {% include "components/logout-header.html" %}
         {% endif %}
-        <div class="alert-box">
+        <div id="alert" class="alert-box">
+            <span class="close-btn" onclick="closeAlert()">&times;</span>
             {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages%}
+                {% if messages %}
                     {% for category, message in messages %}
                         <div class="alert alert-{{ category }}">
-                            {{message}}
+                            {{ message }}
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -206,6 +271,33 @@
         {% include "components/footer.html" %}
     </section>
     
+    <script>
+
+        function showAlert() {
+            var alertBox = document.getElementById('alert');
+            alertBox.style.display = 'block';
+
+       
+            setTimeout(function() {
+                closeAlert();
+            }, 2000);
+        }
+
+   
+        function closeAlert() {
+            var alertBox = document.getElementById('alert');
+            alertBox.style.display = 'none';
+        }
+
+    
+        window.onload = function() {
+      
+            var messages = document.getElementsByClassName('alert');
+            if (messages.length > 0) {
+                showAlert();
+            }
+        }
+    </script>
 
 </body>
 </html>

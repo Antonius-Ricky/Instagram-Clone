@@ -37,10 +37,6 @@ class ForgotPasswordForm(FlaskForm):
     #recaptcha           = RecaptchaField()
     submit              = SubmitField("send link verification to email")
 
-class VerificationResetPasswordForm(FlaskForm):
-    password = PasswordField("new password", validators=[DataRequired()])
-    confirm_password = PasswordField("confirm new password", validators=[DataRequired(), EqualTo("password")])
-    submit = SubmitField("Reset password")
 
 class CreatePostForm(FlaskForm):
     post_pic            = FileField("picture", validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg"])])
