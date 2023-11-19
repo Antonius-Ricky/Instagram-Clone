@@ -3,33 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='logo.png')}}">
     <style>
-        *{
-            padding:0px;
-            margin:0px;
+        * {
+            padding: 0;
+            margin: 0;
             box-sizing: border-box;
         }
 
-        body{
+        body {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
         }
 
-        section.content{
-            min-height: calc(100vh - 100px);
+        section.content {
+            text-align: center;
         }
-        header ul li{
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 650px;
+            margin-top: 35px;
+        }
+
+        img.logo {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1, p, a {
+            color: #262626;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        a {
             display: inline-block;
+            background-color: #0095f6;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #0077cc;
         }
     </style>
     {% if title %}
         <title>{{ title }} . website</title>
     {% else %}
         <title>Website</title>
-    {% endif%}
+    {% endif %}
 </head>
+
+<body>
+    <section class="content">
+        <img src="{{url_for('static', filename='logo.png')}}" alt="logo" style="width: 250px; height: auto;">
+        <div class="container">
+            
+            <h1>Welcome to AmoGram</h1>
+            <p>AmoGram is more than just a web app; it's a vibrant community where connections flourish. Share your moments, connect with friends, and explore the stories of those around you.</p>
+            <p>Our mission is to be the connector that brings people together, fostering relationships and creating a space for genuine connections.</p>
+            <p>Join AmoGram today and start sharing the joy of togetherness. Remember, life is better when shared!</p>
+            <a href="{{url_for('login')}}" style="display: block; margin-top: 20px;">Get Started</a>
+            <!-- Change the above line to use a button -->
+        </div>
+    </section>
+</body>
+
 </html>
 
 {% block content %}
-    <h1>Hello my name is ricky bro whatsup</h1>
-    <a href="{{url_for('login')}}">Back</a>
+
 {% endblock content %}
