@@ -16,20 +16,17 @@
     }
 
     li {
-        margin-right: 10px;
+        margin-right: 20px;
     }
 
-    li::after {
-        content: '|';
-        margin-left: 20px;
-        color: #666; 
-    }
+ 
 
     li:last-child::after {
         content: ''; 
     }
 
     img {
+        margin-left: 10px;
         margin-right: 10px;
     }
 </style>
@@ -49,13 +46,13 @@
 </script>
 
 <header>
-    <img src="{{url_for('static', filename='logo.png')}}" alt="logo" style="width: 25px; height: auto; margin-right: 10px;">
+    <img src="{{url_for('static', filename='logo.png')}}" alt="logo" style="width: 25px; height: auto; margin-right: 15px;">
     <div style="font-size: 20px; font-weight: bold;">
         <ul style="list-style: none; padding: 0;">
-            <li style="display: inline-block; margin-right: 35px;">
+            <li style="display: inline-block; margin-right: 55px;">
                 <a onclick="redirectToHome()">Home</a>
             </li>
-            <li style="display: inline-block; margin-right: 35px;">
+            <li style="display: inline-block; margin-right: 55px;">
                 <a onclick="redirectToProfile()">Profile</a>
             </li>
             <li style="display: inline-block;">
